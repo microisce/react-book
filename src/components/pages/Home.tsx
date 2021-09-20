@@ -2,21 +2,22 @@ import React, {useState} from "react";
 import {Header} from "../skeleton/Header";
 import {BookListing} from "../elements/BookListing";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-import {Button, createStyles, FormControl, InputLabel, Select, TextField} from "@material-ui/core";
+import {Button, createStyles, Fab, FormControl, InputLabel, Select, TextField} from "@material-ui/core";
 import { MenuItem } from "@material-ui/core";
+import NavigationIcon from '@material-ui/icons/Navigation';
 import {BOOKS, LANGUAGES} from "../../shared/constantes";
 import {IFramework} from "../../shared/interfaces";
+import { Document, Page } from 'react-pdf';
 
 
 export function Home() {
     const classes = useStyles();
-    const [count, setCount] = useState(0);
 
     const [query, setQuery] = React.useState('');
     const [language, setLanguage] = React.useState('');
     const [frameworks, setFrameworks] = React.useState([] as IFramework[]);
     const [framework, setFramework] = React.useState('');
-    const [canSearch, setCanSearch] = React.useState(false);
+    const [canSearch, setCanSearch] = React.useState(true);
 
     const handleChangeLanguage = (event: React.ChangeEvent<{ value: any }>) => {
         setLanguage(event.target.value as string);
@@ -101,11 +102,21 @@ export function Home() {
 
             </div>
             <BookListing books={BOOKS}/>
+            <Document
+                file="../../assets/pdfs/11_TheWeb Application Hackers Handbook.pdf"
 
-            <p>You clicked {count} times</p>
-            <button onClick={() => setCount(count + 1)}>
-                Click me
-            </button>
+            >
+                <Page pageNumber={1} />
+            </Document>
+            <Fab variant="extended"
+                 onClick={()=>{
+                     window.scrollTo({top: 0, behavior: 'smooth'});}
+                 }
+                 className={classes.fab}>
+                <NavigationIcon className={classes.extendedIcon}/>
+                Top
+            </Fab>
+
         </div>
     );
 
@@ -125,6 +136,15 @@ const useStyles = makeStyles((theme: Theme) =>
         searchButton: {
             margin: theme.spacing(1),
             minWidth: 100,
+        },
+        extendedIcon: {
+            marginRight: theme.spacing(1),
+        },
+        fab: {
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
         }
+
     }),
 );

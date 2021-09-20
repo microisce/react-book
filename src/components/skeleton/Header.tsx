@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 
 import { makeStyles } from '@material-ui/core/styles';
 import {Button} from "@material-ui/core";
-import {LANGUAGES} from "../../shared/constantes";
 
 export function Header() {
     const classes = useStyles();
@@ -28,11 +27,6 @@ export function Header() {
 
 
         </div>
-            <div className={'linkBar'}>
-                {
-                    LANGUAGES.map(lang => <Button>{lang.name}</Button>)
-                }
-            </div>
         </div>
     )
 }
